@@ -28,6 +28,27 @@ export default function Scoreboard() {
     set_sort_by(event.target.value);
   };
 
+  const incrementScore = (player_id) => {
+    console.log("Increment player", player_id);
+    const id = player_id;
+    const new_players_array = players.map((player) => {
+      // decide whether this player's score needs to be incremented
+      if (player.id === id) {
+        // and if so, create a new player object,
+        return {
+          // but first copying over the player object's data
+          ...player,
+          // and then overriding the score property to be incremented
+          score: player.score + 1,
+        };
+      } else {
+        // else, just keep them
+        return player;
+      }
+    });
+    set_players(new_players_array);
+  };
+
   return (
     <div className="Scoreboard">
       <p>Player's scores:</p>
@@ -40,7 +61,13 @@ export default function Scoreboard() {
       </p>
       <ul>
         {players_sorted.map((player) => (
-          <Player key={player.id} name={player.name} score={player.score} />
+          <Player
+            key={player.id}
+            id={player.id}
+            name={player.name}
+            score={player.score}
+            incrementScore={incrementScore}
+          />
         ))}
       </ul>
       <AddPlayerForm />
