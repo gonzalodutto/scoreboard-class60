@@ -60,6 +60,22 @@ export default function Scoreboard() {
     set_players(new_players_array);
   };
 
+  const randomScores = () => {
+    const new_players_array = players.map((player) => ({
+      ...player,
+      score: Math.floor(Math.random() * 101),
+    }));
+
+    set_players(new_players_array);
+  };
+
+  const createNewPlayer = (name) => {
+    console.log("New player name from form in child component:", name);
+    const newPlayer = { id: players.length + 1, name: name, score: 0 };
+    const newPlayersArray = [...players, newPlayer];
+    set_players(newPlayersArray);
+  };
+
   return (
     <div className="Scoreboard">
       <p>Player's scores:</p>
@@ -70,7 +86,11 @@ export default function Scoreboard() {
           <option value="name">Sort by name</option>
         </select>
       </p>
-      <button onClick={resetScores}>Reset</button>
+      <p>
+        <button onClick={resetScores}>Reset</button>
+      </p>
+
+      <button onClick={randomScores}>Random</button>
       <ul>
         {players_sorted.map((player) => (
           <Player
@@ -82,7 +102,7 @@ export default function Scoreboard() {
           />
         ))}
       </ul>
-      <AddPlayerForm />
+      <AddPlayerForm createNewPlayer={createNewPlayer} />
     </div>
   );
 }

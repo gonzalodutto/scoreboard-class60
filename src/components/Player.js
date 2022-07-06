@@ -7,7 +7,7 @@ export default function Player(props) {
   return (
     <li className="Player">
       <p>
-        {props.name} (score: {props.score})
+        {props.name} (score: {props.score}) id: {props.id}
         <button onClick={onClickIncrement}>increment</button>
       </p>
     </li>
